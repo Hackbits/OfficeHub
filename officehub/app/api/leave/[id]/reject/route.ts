@@ -1,0 +1,38 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const supabase = await createClient();
+    const { id } = await params;
+
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (profile?.role !== "manager" && profile?.role !== "admin") {
+      return NextResponse.json({ error: "Not authorized" }, { status: 403 });
+    }
+
+    const { error } = await supabase
+      .from("leave_requests")
+      .update({ status: "rejected", approved_by: user.id })
+      .eq("id", id);
+
+    if (error) throw error;
+    return NextResponse.json({ message: "Leave request rejected" });
+  } catch (error) {
+    console.error("Reject leave error:", error);
+    return NextResponse.json({ error: "Failed to reject leave" }, { status: 500 });
+  }
+}
