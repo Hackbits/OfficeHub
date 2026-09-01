@@ -5,7 +5,6 @@ import { useAuth } from "@/hooks/use-auth";
 import { useTeamTodayAttendance } from "@/hooks/use-team-attendance";
 import { useLeaveRequests } from "@/hooks/use-leave";
 import { useWfhRequests } from "@/hooks/use-wfh";
-import { useEmployees } from "@/hooks/use-employees";
 import { LoadingSpinner } from "@/components/shared/loading-spinner";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -162,7 +161,7 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           {teamData?.employees && teamData.employees.length > 0 ? (
-            <div className="space-y-2 max-h-[400px] overflow-y-auto">
+            <div className="space-y-2 max-h-96 overflow-y-auto">
               {teamData.employees.map((member) => (
                 <div
                   key={member.user_id}
