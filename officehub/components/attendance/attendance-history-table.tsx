@@ -45,50 +45,57 @@ export function AttendanceHistoryTable({
 
   if (!attendance || attendance.length === 0) {
     return (
-      <div className="text-center py-8 text-muted-foreground">
+      <div className="text-center py-6 sm:py-8 text-muted-foreground text-sm">
         No attendance records found.
       </div>
     );
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Date</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Check In</TableHead>
-          <TableHead>Check Out</TableHead>
-          <TableHead>Hours</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {attendance.map((record) => (
-          <TableRow key={record.id}>
-            <TableCell>{format(new Date(record.date), "MMM dd, yyyy")}</TableCell>
-            <TableCell>
-              <Badge variant={statusColors[record.status] || "default"}>
-                {record.status.replace("_", " ")}
-              </Badge>
-            </TableCell>
-            <TableCell>
-              {record.check_in
-                ? format(new Date(record.check_in), "hh:mm a")
-                : "—"}
-            </TableCell>
-            <TableCell>
-              {record.check_out
-                ? format(new Date(record.check_out), "hh:mm a")
-                : "—"}
-            </TableCell>
-            <TableCell>
-              {record.working_hours != null
-                ? `${record.working_hours.toFixed(1)}h`
-                : "—"}
-            </TableCell>
+    <div className="overflow-x-auto">
+      <Table className="min-w-100">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="min-w-25">Date</TableHead>
+            <TableHead className="min-w-20">Status</TableHead>
+            <TableHead className="min-w-20 hidden sm:table-cell">Check In</TableHead>
+            <TableHead className="min-w-20 hidden sm:table-cell">Check Out</TableHead>
+            <TableHead className="min-w-15">Hours</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {attendance.map((record) => (
+            <TableRow key={record.id}>
+              <TableCell className="text-xs sm:text-sm">
+                {format(new Date(record.date), "MMM dd, yyyy")}
+              </TableCell>
+              <TableCell>
+                <Badge
+                  variant={statusColors[record.status] || "default"}
+                  className="text-[10px] sm:text-xs"
+                >
+                  {record.status.replace("_", " ")}
+                </Badge>
+              </TableCell>
+              <TableCell className="hidden sm:table-cell text-xs sm:text-sm">
+                {record.check_in
+                  ? format(new Date(record.check_in), "hh:mm a")
+                  : "—"}
+              </TableCell>
+              <TableCell className="hidden sm:table-cell text-xs sm:text-sm">
+                {record.check_out
+                  ? format(new Date(record.check_out), "hh:mm a")
+                  : "—"}
+              </TableCell>
+              <TableCell className="text-xs sm:text-sm font-medium">
+                {record.working_hours != null
+                  ? `${record.working_hours.toFixed(1)}h`
+                  : "—"}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

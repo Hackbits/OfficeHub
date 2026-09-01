@@ -53,7 +53,7 @@ export default function EmployeesPage() {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="px-3 py-2 rounded-md border border-input bg-background text-sm min-w-[120px] w-full sm:w-auto"
+              className="px-3 py-2 rounded-md border border-input bg-background text-sm min-w-30 w-full sm:w-auto"
             >
               <option value="">All Status</option>
               <option value="active">Active</option>

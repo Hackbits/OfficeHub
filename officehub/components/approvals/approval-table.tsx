@@ -51,15 +51,15 @@ export function ApprovalTable({
 
   return (
     <div className="overflow-x-auto">
-      <Table className="min-w-[500px]">
+      <Table className="min-w-125">
         <TableHeader>
           <TableRow>
-            <TableHead className="min-w-[150px]">Employee</TableHead>
-            {type === "leave" && <TableHead className="min-w-[80px] hidden sm:table-cell">Type</TableHead>}
-            <TableHead className="min-w-[120px]">Duration</TableHead>
-            <TableHead className="min-w-[100px] hidden md:table-cell">Reason</TableHead>
-            <TableHead className="min-w-[100px] hidden lg:table-cell">Submitted</TableHead>
-            <TableHead className="text-right min-w-[120px]">Actions</TableHead>
+            <TableHead className="min-w-37.5">Employee</TableHead>
+            {type === "leave" && <TableHead className="min-w-20 hidden sm:table-cell">Type</TableHead>}
+            <TableHead className="min-w-30">Duration</TableHead>
+            <TableHead className="min-w-25 hidden md:table-cell">Reason</TableHead>
+            <TableHead className="min-w-25 hidden lg:table-cell">Submitted</TableHead>
+            <TableHead className="text-right min-w-30">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -99,7 +99,7 @@ export function ApprovalTable({
                 {format(new Date(req.start_date), "MMM d")} -{" "}
                 {format(new Date(req.end_date), "MMM d, yyyy")}
               </TableCell>
-              <TableCell className="max-w-[150px] sm:max-w-[200px] truncate text-xs sm:text-sm hidden md:table-cell">
+              <TableCell className="max-w-37.5 sm:max-w-50 truncate text-xs sm:text-sm hidden md:table-cell">
                 {req.reason}
               </TableCell>
               <TableCell className="text-xs sm:text-sm hidden lg:table-cell">
