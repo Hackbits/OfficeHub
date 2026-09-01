@@ -6,22 +6,19 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Bell,
   BellOff,
   CheckCheck,
   CalendarOff,
   Home,
-  ClipboardCheck,
-  AlertCircle,
   Settings,
 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
-const TYPE_CONFIG: Record<string, { icon: React.ComponentType<{ className?: string }>; color: string; label: string }> = {
-  leave: { icon: CalendarOff, color: "text-amber-500", label: "Leave" },
-  wfh: { icon: Home, color: "text-blue-500", label: "WFH" },
-  attendance: { icon: CheckCheck, color: "text-green-500", label: "Attendance" },
-  system: { icon: Settings, color: "text-gray-500", label: "System" },
+const TYPE_CONFIG: Record<string, { icon: React.ComponentType<{ className?: string }>; color: string }> = {
+  leave: { icon: CalendarOff, color: "text-amber-500" },
+  wfh: { icon: Home, color: "text-blue-500" },
+  attendance: { icon: CheckCheck, color: "text-green-500" },
+  system: { icon: Settings, color: "text-gray-500" },
 };
 
 export default function NotificationsPage() {
@@ -49,11 +46,11 @@ export default function NotificationsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold">Notifications</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-xl sm:text-2xl font-bold">Notifications</h1>
+          <p className="text-muted-foreground text-sm">
             {unreadCount > 0 ? `${unreadCount} unread notification${unreadCount > 1 ? "s" : ""}` : "All caught up!"}
           </p>
         </div>
@@ -67,12 +64,12 @@ export default function NotificationsPage() {
 
       {notifications.length === 0 ? (
         <Card>
-          <CardContent className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center mb-4">
-              <BellOff className="h-8 w-8 text-muted-foreground" />
+          <CardContent className="flex flex-col items-center justify-center py-12 sm:py-16 text-center px-4">
+            <div className="h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-muted flex items-center justify-center mb-4">
+              <BellOff className="h-6 w-6 sm:h-8 sm:w-8 text-muted-foreground" />
             </div>
-            <h3 className="text-lg font-semibold">No notifications</h3>
-            <p className="text-sm text-muted-foreground mt-1 max-w-sm">
+            <h3 className="text-base sm:text-lg font-semibold">No notifications</h3>
+            <p className="text-xs sm:text-sm text-muted-foreground mt-1 max-w-sm">
               You&apos;re all caught up! Notifications about leave requests, WFH approvals, and attendance will appear here.
             </p>
           </CardContent>
@@ -90,22 +87,22 @@ export default function NotificationsPage() {
                   !notification.read ? "bg-primary/5 border-primary/20" : ""
                 }`}
               >
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
-                    <div className={`mt-0.5 ${config.color}`}>
-                      <Icon className="h-5 w-5" />
+                <CardContent className="p-3 sm:p-4">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className={`mt-0.5 shrink-0 ${config.color}`}>
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
                         <h4 className="text-sm font-semibold">{notification.title}</h4>
                         {!notification.read && (
-                          <Badge variant="default" className="h-5 px-1.5 text-[10px]">
+                          <Badge variant="default" className="h-4 sm:h-5 px-1 sm:px-1.5 text-[9px] sm:text-[10px]">
                             New
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">{notification.message}</p>
-                      <p className="text-xs text-muted-foreground mt-2">
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-1">{notification.message}</p>
+                      <p className="text-[10px] sm:text-xs text-muted-foreground mt-1.5 sm:mt-2">
                         {formatDistanceToNow(new Date(notification.created_at), { addSuffix: true })}
                       </p>
                     </div>
@@ -113,11 +110,12 @@ export default function NotificationsPage() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="shrink-0"
+                        className="shrink-0 h-7 sm:h-8 text-xs sm:text-sm"
                         onClick={() => handleMarkRead(notification.id)}
                         disabled={markRead.isPending}
                       >
-                        Mark read
+                        <span className="hidden sm:inline">Mark read</span>
+                        <span className="sm:hidden">Read</span>
                       </Button>
                     )}
                   </div>

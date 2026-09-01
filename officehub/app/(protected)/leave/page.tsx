@@ -26,17 +26,17 @@ export default function LeavePage() {
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Leave Management</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-xl sm:text-2xl font-bold">Leave Management</h1>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 lg:grid-cols-3">
         {/* Sidebar */}
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6 order-2 lg:order-1">
           <Card>
-            <CardHeader>
-              <CardTitle>Request Leave</CardTitle>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm sm:text-base">Request Leave</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pb-4 sm:pb-6">
               <LeaveRequestForm
                 onSubmit={handleSubmit}
                 isLoading={createLeave.isPending}
@@ -48,29 +48,29 @@ export default function LeavePage() {
         </div>
 
         {/* Main Content */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 order-1 lg:order-2">
           <Card>
             <CardContent className="p-0">
               <Tabs defaultValue="all" className="w-full">
-                <div className="px-4 pt-4">
-                  <TabsList>
-                    <TabsTrigger value="all" onClick={() => setStatusFilter("")}>
+                <div className="px-3 sm:px-4 pt-3 sm:pt-4">
+                  <TabsList className="w-full sm:w-auto">
+                    <TabsTrigger value="all" onClick={() => setStatusFilter("")} className="text-xs sm:text-sm">
                       All
                     </TabsTrigger>
-                    <TabsTrigger value="pending" onClick={() => setStatusFilter("pending")}>
+                    <TabsTrigger value="pending" onClick={() => setStatusFilter("pending")} className="text-xs sm:text-sm">
                       Pending
                     </TabsTrigger>
-                    <TabsTrigger value="approved" onClick={() => setStatusFilter("approved")}>
+                    <TabsTrigger value="approved" onClick={() => setStatusFilter("approved")} className="text-xs sm:text-sm">
                       Approved
                     </TabsTrigger>
-                    <TabsTrigger value="rejected" onClick={() => setStatusFilter("rejected")}>
+                    <TabsTrigger value="rejected" onClick={() => setStatusFilter("rejected")} className="text-xs sm:text-sm">
                       Rejected
                     </TabsTrigger>
                   </TabsList>
                 </div>
                 <TabsContent value="all" className="mt-0">
                   {isLoading ? (
-                    <div className="p-6 space-y-2">
+                    <div className="p-4 sm:p-6 space-y-2">
                       {[...Array(5)].map((_, i) => (
                         <div key={i} className="h-12 animate-pulse bg-muted rounded" />
                       ))}
@@ -81,7 +81,7 @@ export default function LeavePage() {
                 </TabsContent>
                 <TabsContent value="pending" className="mt-0">
                   {isLoading ? (
-                    <div className="p-6 space-y-2">
+                    <div className="p-4 sm:p-6 space-y-2">
                       {[...Array(3)].map((_, i) => (
                         <div key={i} className="h-12 animate-pulse bg-muted rounded" />
                       ))}
@@ -92,7 +92,7 @@ export default function LeavePage() {
                 </TabsContent>
                 <TabsContent value="approved" className="mt-0">
                   {isLoading ? (
-                    <div className="p-6 space-y-2">
+                    <div className="p-4 sm:p-6 space-y-2">
                       {[...Array(3)].map((_, i) => (
                         <div key={i} className="h-12 animate-pulse bg-muted rounded" />
                       ))}
@@ -103,7 +103,7 @@ export default function LeavePage() {
                 </TabsContent>
                 <TabsContent value="rejected" className="mt-0">
                   {isLoading ? (
-                    <div className="p-6 space-y-2">
+                    <div className="p-4 sm:p-6 space-y-2">
                       {[...Array(3)].map((_, i) => (
                         <div key={i} className="h-12 animate-pulse bg-muted rounded" />
                       ))}

@@ -26,10 +26,10 @@ export default function ReportsPage() {
 
   if (profile?.role !== "manager" && profile?.role !== "admin") {
     return (
-      <div className="flex flex-col items-center justify-center py-12 space-y-4">
-        <ShieldAlert className="h-12 w-12 text-muted-foreground" />
-        <h2 className="text-xl font-semibold">Access Denied</h2>
-        <p className="text-muted-foreground">Only managers can access reports.</p>
+      <div className="flex flex-col items-center justify-center py-8 sm:py-12 px-4 space-y-4">
+        <ShieldAlert className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground" />
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Access Denied</h2>
+        <p className="text-muted-foreground text-sm text-center">Only managers can access reports.</p>
         <Link href="/dashboard">
           <Button>Back to Dashboard</Button>
         </Link>
@@ -38,30 +38,30 @@ export default function ReportsPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Reports</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-xl sm:text-2xl font-bold">Reports</h1>
 
       <Card>
-        <CardContent className="pt-6">
+        <CardContent className="p-3 sm:p-6 pt-4 sm:pt-6">
           <ReportFilters onFilter={setFilters} />
         </CardContent>
       </Card>
 
       <Tabs defaultValue="attendance" className="w-full">
-        <TabsList>
-          <TabsTrigger value="attendance">Attendance</TabsTrigger>
-          <TabsTrigger value="leave">Leave</TabsTrigger>
-          <TabsTrigger value="wfh">WFH</TabsTrigger>
+        <TabsList className="w-full sm:w-auto">
+          <TabsTrigger value="attendance" className="text-xs sm:text-sm">Attendance</TabsTrigger>
+          <TabsTrigger value="leave" className="text-xs sm:text-sm">Leave</TabsTrigger>
+          <TabsTrigger value="wfh" className="text-xs sm:text-sm">WFH</TabsTrigger>
         </TabsList>
 
         <TabsContent value="attendance">
           {loadingAttendance ? (
             <div className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
                 {[...Array(6)].map((_, i) => (
                   <Card key={i}>
-                    <CardContent className="p-4">
-                      <div className="h-12 animate-pulse bg-muted rounded" />
+                    <CardContent className="p-3 sm:p-4">
+                      <div className="h-10 sm:h-12 animate-pulse bg-muted rounded" />
                     </CardContent>
                   </Card>
                 ))}
@@ -78,11 +78,11 @@ export default function ReportsPage() {
         <TabsContent value="leave">
           {loadingLeave ? (
             <div className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-5">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
                 {[...Array(5)].map((_, i) => (
                   <Card key={i}>
-                    <CardContent className="p-4">
-                      <div className="h-12 animate-pulse bg-muted rounded" />
+                    <CardContent className="p-3 sm:p-4">
+                      <div className="h-10 sm:h-12 animate-pulse bg-muted rounded" />
                     </CardContent>
                   </Card>
                 ))}
@@ -99,11 +99,11 @@ export default function ReportsPage() {
         <TabsContent value="wfh">
           {loadingWfh ? (
             <div className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                 {[...Array(4)].map((_, i) => (
                   <Card key={i}>
-                    <CardContent className="p-4">
-                      <div className="h-12 animate-pulse bg-muted rounded" />
+                    <CardContent className="p-3 sm:p-4">
+                      <div className="h-10 sm:h-12 animate-pulse bg-muted rounded" />
                     </CardContent>
                   </Card>
                 ))}
