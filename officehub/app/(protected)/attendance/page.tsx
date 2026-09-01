@@ -11,23 +11,26 @@ import { History } from "lucide-react";
 
 export default function AttendancePage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Attendance</h1>
-        <Link href="/attendance/history" className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-medium hover:bg-muted hover:text-foreground">
-          <History className="mr-1 h-4 w-4" />
-          View History
+        <h1 className="text-xl sm:text-2xl font-bold">Attendance</h1>
+        <Link
+          href="/attendance/history"
+          className="inline-flex items-center gap-1.5 sm:gap-2 rounded-lg border border-border bg-background px-2.5 sm:px-3 py-1.5 text-xs sm:text-sm font-medium hover:bg-muted hover:text-foreground"
+        >
+          <History className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+          <span className="hidden xs:inline">View </span>History
         </Link>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
         <Card>
-          <CardHeader>
+          <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground">
               Current Time
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex flex-col items-center gap-4">
+          <CardContent className="flex flex-col items-center gap-3 sm:gap-4 pb-4 sm:pb-6">
             <AttendanceClock />
             <CheckInButton />
           </CardContent>
@@ -39,10 +42,10 @@ export default function AttendancePage() {
       <MonthlyAttendanceChart />
 
       <Card>
-        <CardHeader>
-          <CardTitle>Recent Attendance</CardTitle>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm sm:text-base">Recent Attendance</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-3 sm:p-6">
           <AttendanceHistoryTable />
         </CardContent>
       </Card>

@@ -39,18 +39,18 @@ export default function DashboardPage() {
 
   if (!isAdmin) {
     return (
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         <div>
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-xl sm:text-2xl font-bold">
             Welcome back, {profile?.full_name?.split(" ")[0] || "User"}
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm sm:text-base">
             Here&apos;s what&apos;s happening today.
           </p>
         </div>
         <Card>
-          <CardContent className="p-6 text-center text-muted-foreground">
-            <p>
+          <CardContent className="p-4 sm:p-6 text-center text-muted-foreground">
+            <p className="text-sm sm:text-base">
               Welcome to your dashboard. Use the navigation to access
               attendance, leave, and WFH features.
             </p>
@@ -61,40 +61,40 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">OFFICE DASHBOARD</h1>
-        <p className="text-muted-foreground">
+        <h1 className="text-xl sm:text-2xl font-bold">OFFICE DASHBOARD</h1>
+        <p className="text-muted-foreground text-sm sm:text-base">
           Overview of Team&apos;s Attendance Dashboard.
         </p>
       </div>
 
       {/* Summary Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              Total Employees
+            <CardTitle className="text-xs sm:text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <Users className="h-4 w-4 shrink-0" />
+              <span className="truncate">Total Employees</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold">{teamData?.summary.total || 0}</p>
+          <CardContent className="pb-3 sm:pb-4">
+            <p className="text-xl sm:text-2xl font-bold">{teamData?.summary.total || 0}</p>
           </CardContent>
         </Card>
 
         <Card className="border-green-200 bg-green-50/50 dark:border-green-900 dark:bg-green-950/30">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-green-600 dark:text-green-400 flex items-center gap-2">
-              <UserCheck className="h-4 w-4" />
-              Present Today
+            <CardTitle className="text-xs sm:text-sm font-medium text-green-600 dark:text-green-400 flex items-center gap-2">
+              <UserCheck className="h-4 w-4 shrink-0" />
+              <span className="truncate">Present</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+          <CardContent className="pb-3 sm:pb-4">
+            <p className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">
               {(teamData?.summary.present || 0) + (teamData?.summary.late || 0)}
             </p>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">
               Including {teamData?.summary.late || 0} late
             </p>
           </CardContent>
@@ -102,13 +102,13 @@ export default function DashboardPage() {
 
         <Card className="border-blue-200 bg-blue-50/50 dark:border-blue-900 dark:bg-blue-950/30">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-blue-600 dark:text-blue-400 flex items-center gap-2">
-              <Home className="h-4 w-4" />
-              Working From Home
+            <CardTitle className="text-xs sm:text-sm font-medium text-blue-600 dark:text-blue-400 flex items-center gap-2">
+              <Home className="h-4 w-4 shrink-0" />
+              <span className="truncate">WFH</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <CardContent className="pb-3 sm:pb-4">
+            <p className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">
               {teamData?.summary.wfh || 0}
             </p>
           </CardContent>
@@ -116,13 +116,13 @@ export default function DashboardPage() {
 
         <Card className="border-red-200 bg-red-50/50 dark:border-red-900 dark:bg-red-950/30">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-red-600 dark:text-red-400 flex items-center gap-2">
-              <UserX className="h-4 w-4" />
-              Absent Today
+            <CardTitle className="text-xs sm:text-sm font-medium text-red-600 dark:text-red-400 flex items-center gap-2">
+              <UserX className="h-4 w-4 shrink-0" />
+              <span className="truncate">Absent</span>
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-red-600 dark:text-red-400">
+          <CardContent className="pb-3 sm:pb-4">
+            <p className="text-xl sm:text-2xl font-bold text-red-600 dark:text-red-400">
               {teamData?.summary.absent || 0}
             </p>
           </CardContent>
@@ -134,7 +134,7 @@ export default function DashboardPage() {
         <Card className="border-primary/20 bg-primary/5">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <ClipboardCheck className="h-4 w-4" />
+              <ClipboardCheck className="h-4 w-4 shrink-0" />
               Pending Approvals
             </CardTitle>
           </CardHeader>
@@ -153,34 +153,34 @@ export default function DashboardPage() {
 
       {/* Team Attendance List */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-base font-semibold flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
+        <CardHeader className="pb-3">
+          <CardTitle className="text-sm sm:text-base font-semibold flex items-center gap-2">
+            <TrendingUp className="h-4 w-4 shrink-0" />
             Today&apos;s Attendance
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-3 sm:p-6">
           {teamData?.employees && teamData.employees.length > 0 ? (
-            <div className="space-y-2 max-h-96 overflow-y-auto">
+            <div className="space-y-2 max-h-75 sm:max-h-100 overflow-y-auto">
               {teamData.employees.map((member) => (
                 <div
                   key={member.user_id}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
+                  className="flex items-center justify-between p-2.5 sm:p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center text-sm font-medium text-primary">
+                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                    <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-primary/10 flex items-center justify-center text-xs sm:text-sm font-medium text-primary shrink-0">
                       {member.full_name?.charAt(0) || "U"}
                     </div>
-                    <div>
-                      <p className="text-sm font-medium">{member.full_name}</p>
-                      <p className="text-xs text-muted-foreground">
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium truncate">{member.full_name}</p>
+                      <p className="text-[10px] sm:text-xs text-muted-foreground truncate">
                         {member.employee_id}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                     {member.check_in && (
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-[10px] sm:text-xs text-muted-foreground hidden sm:inline">
                         In:{" "}
                         {new Date(member.check_in).toLocaleTimeString("en-US", {
                           hour: "2-digit",
@@ -189,7 +189,7 @@ export default function DashboardPage() {
                       </span>
                     )}
                     {member.working_hours != null && (
-                      <span className="text-xs font-medium">
+                      <span className="text-[10px] sm:text-xs font-medium hidden sm:inline">
                         {member.working_hours.toFixed(1)}h
                       </span>
                     )}
@@ -204,7 +204,7 @@ export default function DashboardPage() {
                               ? "destructive"
                               : "secondary"
                       }
-                      className="capitalize"
+                      className="capitalize text-[10px] sm:text-xs px-1.5 sm:px-2.5"
                     >
                       {member.status === "no_record"
                         ? "No record"
@@ -215,7 +215,7 @@ export default function DashboardPage() {
               ))}
             </div>
           ) : (
-            <div className="text-center text-muted-foreground py-8">
+            <div className="text-center text-muted-foreground py-6 sm:py-8 text-sm">
               No team members found.
             </div>
           )}

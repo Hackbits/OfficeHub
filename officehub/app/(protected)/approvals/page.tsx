@@ -24,10 +24,10 @@ export default function ApprovalsPage() {
 
   if (profile?.role !== "manager" && profile?.role !== "admin") {
     return (
-      <div className="flex flex-col items-center justify-center py-12 space-y-4">
-        <ShieldAlert className="h-12 w-12 text-muted-foreground" />
-        <h2 className="text-xl font-semibold">Access Denied</h2>
-        <p className="text-muted-foreground">Only managers can access approvals.</p>
+      <div className="flex flex-col items-center justify-center py-8 sm:py-12 px-4 space-y-4">
+        <ShieldAlert className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground" />
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Access Denied</h2>
+        <p className="text-muted-foreground text-sm text-center">Only managers can access approvals.</p>
         <Link href="/dashboard">
           <Button>Back to Dashboard</Button>
         </Link>
@@ -72,26 +72,26 @@ export default function ApprovalsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Approvals</h1>
+    <div className="space-y-4 sm:space-y-6">
+      <h1 className="text-xl sm:text-2xl font-bold">Approvals</h1>
 
       <Card>
         <CardContent className="p-0">
           <Tabs defaultValue="leave" className="w-full">
-            <div className="px-4 pt-4">
-              <TabsList>
-                <TabsTrigger value="leave">
-                  Leave Requests
+            <div className="px-3 sm:px-4 pt-3 sm:pt-4">
+              <TabsList className="w-full sm:w-auto">
+                <TabsTrigger value="leave" className="text-xs sm:text-sm">
+                  Leave
                   {pendingLeave && pendingLeave.length > 0 && (
-                    <span className="ml-2 px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">
+                    <span className="ml-1.5 sm:ml-2 px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs bg-primary/10 text-primary rounded-full">
                       {pendingLeave.length}
                     </span>
                   )}
                 </TabsTrigger>
-                <TabsTrigger value="wfh">
-                  WFH Requests
+                <TabsTrigger value="wfh" className="text-xs sm:text-sm">
+                  WFH
                   {pendingWfh && pendingWfh.length > 0 && (
-                    <span className="ml-2 px-2 py-0.5 text-xs bg-primary/10 text-primary rounded-full">
+                    <span className="ml-1.5 sm:ml-2 px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs bg-primary/10 text-primary rounded-full">
                       {pendingWfh.length}
                     </span>
                   )}
@@ -100,7 +100,7 @@ export default function ApprovalsPage() {
             </div>
             <TabsContent value="leave" className="mt-0">
               {loadingLeave ? (
-                <div className="p-6 space-y-2">
+                <div className="p-4 sm:p-6 space-y-2">
                   {[...Array(5)].map((_, i) => (
                     <div key={i} className="h-16 animate-pulse bg-muted rounded" />
                   ))}
@@ -120,7 +120,7 @@ export default function ApprovalsPage() {
             </TabsContent>
             <TabsContent value="wfh" className="mt-0">
               {loadingWfh ? (
-                <div className="p-6 space-y-2">
+                <div className="p-4 sm:p-6 space-y-2">
                   {[...Array(5)].map((_, i) => (
                     <div key={i} className="h-16 animate-pulse bg-muted rounded" />
                   ))}
