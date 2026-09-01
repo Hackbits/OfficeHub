@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState, useEffect } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useQueryClient } from "@tanstack/react-query";
@@ -61,7 +61,9 @@ export default function EditEmployeePage({
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <ShieldAlert className="h-12 w-12 text-muted-foreground" />
         <h2 className="text-xl font-semibold">Access Denied</h2>
-        <p className="text-muted-foreground">Only administrators can edit employees.</p>
+        <p className="text-muted-foreground">
+          Only administrators can edit employees.
+        </p>
         <Link href={`/employees/${id}`}>
           <Button>Back to Employee</Button>
         </Link>
@@ -108,8 +110,11 @@ export default function EditEmployeePage({
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Link href={`/employees/${id}`} className="inline-flex items-center justify-center h-10 w-10 rounded-lg hover:bg-muted">
-            <ArrowLeft className="h-4 w-4" />
+        <Link
+          href={`/employees/${id}`}
+          className="inline-flex items-center justify-center h-10 w-10 rounded-lg hover:bg-muted"
+        >
+          <ArrowLeft className="h-4 w-4" />
         </Link>
         <h1 className="text-2xl font-bold">Edit Employee</h1>
       </div>
@@ -125,7 +130,9 @@ export default function EditEmployeePage({
               <Input
                 id="full_name"
                 value={form.full_name}
-                onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, full_name: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
@@ -141,7 +148,9 @@ export default function EditEmployeePage({
               <Input
                 id="office_location"
                 value={form.office_location}
-                onChange={(e) => setForm({ ...form, office_location: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, office_location: e.target.value })
+                }
               />
             </div>
           </CardContent>
@@ -157,14 +166,18 @@ export default function EditEmployeePage({
               <Input
                 id="designation"
                 value={form.designation}
-                onChange={(e) => setForm({ ...form, designation: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, designation: e.target.value })
+                }
               />
             </div>
             <div className="space-y-2">
               <Label>Department</Label>
               <select
                 value={form.department_id}
-                onChange={(e) => setForm({ ...form, department_id: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, department_id: e.target.value })
+                }
                 className="flex w-full h-8 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 <option value="">No department</option>
