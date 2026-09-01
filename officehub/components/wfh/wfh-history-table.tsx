@@ -58,14 +58,14 @@ export function WfhHistoryTable({ requests, showCancel = true }: WfhHistoryTable
 
   return (
     <div className="overflow-x-auto">
-      <Table className="min-w-[400px]">
+      <Table className="min-w-100">
         <TableHeader>
           <TableRow>
-            <TableHead className="min-w-[120px]">Duration</TableHead>
-            <TableHead className="min-w-[100px] hidden md:table-cell">Reason</TableHead>
-            <TableHead className="min-w-[80px]">Status</TableHead>
-            <TableHead className="min-w-[100px] hidden lg:table-cell">Submitted</TableHead>
-            {showCancel && <TableHead className="text-right min-w-[70px]">Actions</TableHead>}
+            <TableHead className="min-w-30">Duration</TableHead>
+            <TableHead className="min-w-25 hidden md:table-cell">Reason</TableHead>
+            <TableHead className="min-w-20">Status</TableHead>
+            <TableHead className="min-w-25 hidden lg:table-cell">Submitted</TableHead>
+            {showCancel && <TableHead className="text-right min-w-17.5">Actions</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -75,7 +75,7 @@ export function WfhHistoryTable({ requests, showCancel = true }: WfhHistoryTable
                 {format(new Date(req.start_date), "MMM d")} -{" "}
                 {format(new Date(req.end_date), "MMM d, yyyy")}
               </TableCell>
-              <TableCell className="max-w-[150px] sm:max-w-[200px] truncate text-xs sm:text-sm hidden md:table-cell">
+              <TableCell className="max-w-37.5 sm:max-w-50 truncate text-xs sm:text-sm hidden md:table-cell">
                 {req.reason}
               </TableCell>
               <TableCell>

@@ -140,19 +140,19 @@ export function MonthlyAttendanceChart() {
     <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-base font-semibold">Monthly Attendance</CardTitle>
-          <Badge variant="secondary" className="font-medium">
+          <CardTitle className="text-sm sm:text-base font-semibold">Monthly Attendance</CardTitle>
+          <Badge variant="secondary" className="font-medium text-[10px] sm:text-xs">
             <TrendingUp className="h-3 w-3 mr-1" />
             {attendanceRate}% active
           </Badge>
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-muted-foreground">
           {format(new Date(), "MMMM yyyy")}
         </p>
       </CardHeader>
-      <CardContent className="pt-2">
+      <CardContent className="pt-2 px-2 sm:px-6">
         {/* Chart */}
-        <div className="h-48">
+        <div className="h-40 sm:h-48">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData} barCategoryGap="15%">
               <CartesianGrid
@@ -162,17 +162,18 @@ export function MonthlyAttendanceChart() {
               />
               <XAxis
                 dataKey="day"
-                fontSize={11}
+                fontSize={10}
                 tickLine={false}
                 axisLine={false}
                 tick={{ fill: "hsl(var(--muted-foreground))" }}
+                interval="preserveStartEnd"
               />
               <YAxis
-                fontSize={11}
+                fontSize={10}
                 tickLine={false}
                 axisLine={false}
                 tick={{ fill: "hsl(var(--muted-foreground))" }}
-                width={20}
+                width={18}
               />
               <Tooltip content={<ChartTooltip />} cursor={{ fill: "hsl(var(--muted)/0.5)" }} />
               <Bar dataKey="present" stackId="status" radius={[0, 0, 0, 0]}>
@@ -216,27 +217,27 @@ export function MonthlyAttendanceChart() {
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-2 gap-3 mt-4 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-3 sm:mt-4 sm:grid-cols-4">
           {Object.entries(STATUS_CONFIG).map(([key, config]) => {
             const count = summary[key as keyof typeof summary];
             const Icon = config.icon;
             return (
               <div
                 key={key}
-                className="flex items-center gap-3 p-3 rounded-lg bg-muted/50"
+                className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg bg-muted/50"
               >
                 <div
-                  className="flex items-center justify-center w-9 h-9 rounded-lg"
+                  className="flex items-center justify-center w-7 h-7 sm:w-9 sm:h-9 rounded-lg shrink-0"
                   style={{ backgroundColor: `${config.color}15` }}
                 >
                   <Icon
-                    className="w-4 h-4"
+                    className="w-3 h-3 sm:w-4 sm:h-4"
                     style={{ color: config.color }}
                   />
                 </div>
-                <div>
-                  <p className="text-lg font-bold leading-none tabular-nums">{count}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{config.label}</p>
+                <div className="min-w-0">
+                  <p className="text-base sm:text-lg font-bold leading-none tabular-nums">{count}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5">{config.label}</p>
                 </div>
               </div>
             );

@@ -20,7 +20,7 @@ export function TodayStatus() {
   if (isLoading) {
     return (
       <Card>
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="h-8 animate-pulse bg-muted rounded" />
         </CardContent>
       </Card>
@@ -37,23 +37,23 @@ export function TodayStatus() {
           Today&apos;s Status
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-4 sm:pb-6">
         <div className="flex items-center gap-2">
           {config.icon}
-          <Badge variant={config.variant}>{config.label}</Badge>
+          <Badge variant={config.variant} className="text-xs sm:text-sm">{config.label}</Badge>
         </div>
         {attendance?.check_in && (
-          <p className="text-sm text-muted-foreground mt-2">
+          <p className="text-xs sm:text-sm text-muted-foreground mt-2">
             Check in: {new Date(attendance.check_in).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
           </p>
         )}
         {attendance?.check_out && (
-          <p className="text-sm text-muted-foreground">
+          <p className="text-xs sm:text-sm text-muted-foreground">
             Check out: {new Date(attendance.check_out).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
           </p>
         )}
         {attendance?.working_hours != null && (
-          <p className="text-sm font-medium mt-1">
+          <p className="text-xs sm:text-sm font-medium mt-1">
             Working hours: {attendance.working_hours.toFixed(1)}h
           </p>
         )}
