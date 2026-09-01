@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createClient } from "@/lib/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import {
   BarChart,
   Bar,
@@ -10,10 +11,62 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
+import { CheckCircle, Home, CalendarOff, XCircle, TrendingUp } from "lucide-react";
+
+const STATUS_CONFIG = {
+  present: { color: "#22c55e", icon: CheckCircle, label: "Present" },
+  wfh: { color: "#3b82f6", icon: Home, label: "WFH" },
+  leave: { color: "#f59e0b", icon: CalendarOff, label: "Leave" },
+  absent: { color: "#f87171", icon: XCircle, label: "Absent" },
+};
+
+interface ChartTooltipProps {
+  active?: boolean;
+  payload?: Array<{ value: number; dataKey: string }>;
+  label?: string;
+}
+
+function ChartTooltip({ active, payload, label }: ChartTooltipProps) {
+  if (!active || !payload) return null;
+
+  const total = payload.reduce((sum, item) => sum + item.value, 0);
+
+  return (
+    <div className="bg-card border border-border rounded-lg shadow-lg p-3 min-w-[140px]">
+      <p className="text-sm font-semibold mb-2 text-foreground">Day {label}</p>
+      <div className="space-y-1.5">
+        {payload.map((item) => {
+          const config = STATUS_CONFIG[item.dataKey as keyof typeof STATUS_CONFIG];
+          if (!config || item.value === 0) return null;
+          return (
+            <div key={item.dataKey} className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: config.color }}
+                />
+                <span className="text-xs text-muted-foreground">{config.label}</span>
+              </div>
+              <span className="text-xs font-medium">1</span>
+            </div>
+          );
+        })}
+      </div>
+      {total > 0 && (
+        <div className="mt-2 pt-2 border-t border-border">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground">Total</span>
+            <span className="text-xs font-semibold">{total}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function MonthlyAttendanceChart() {
   const supabase = createClient();
@@ -26,7 +79,7 @@ export function MonthlyAttendanceChart() {
 
       const now = new Date();
       const start = startOfMonth(now);
-      const end = endOfMonth(now);
+      const end = now;
 
       const { data } = await supabase
         .from("attendance")
@@ -39,12 +92,15 @@ export function MonthlyAttendanceChart() {
       return days.map((day) => {
         const dateStr = format(day, "yyyy-MM-dd");
         const record = data?.find((d: { date: string; status: string }) => d.date === dateStr);
+        const status = record?.status || "absent";
         return {
           day: format(day, "dd"),
-          present: record?.status === "present" ? 1 : 0,
-          wfh: record?.status === "wfh" ? 1 : 0,
-          leave: record?.status === "leave" ? 1 : 0,
-          absent: record?.status === "absent" || !record ? 1 : 0,
+          date: day,
+          status,
+          present: status === "present" ? 1 : 0,
+          wfh: status === "wfh" ? 1 : 0,
+          leave: status === "leave" ? 1 : 0,
+          absent: status === "absent" || !record ? 1 : 0,
         };
       });
     },
@@ -54,7 +110,15 @@ export function MonthlyAttendanceChart() {
     return (
       <Card>
         <CardContent className="p-6">
-          <div className="h-64 animate-pulse bg-muted rounded" />
+          <div className="space-y-4">
+            <div className="h-6 w-40 animate-pulse bg-muted rounded" />
+            <div className="h-48 animate-pulse bg-muted rounded-lg" />
+            <div className="grid grid-cols-4 gap-4">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-16 animate-pulse bg-muted rounded-lg" />
+              ))}
+            </div>
+          </div>
         </CardContent>
       </Card>
     );
@@ -67,44 +131,116 @@ export function MonthlyAttendanceChart() {
     leave: chartData?.reduce((sum, d) => sum + d.leave, 0) || 0,
   };
 
+  const totalDays = summary.present + summary.wfh + summary.leave + summary.absent;
+  const attendanceRate = totalDays > 0
+    ? Math.round(((summary.present + summary.wfh) / totalDays) * 100)
+    : 0;
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Monthly Attendance</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="pb-2">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-base font-semibold">Monthly Attendance</CardTitle>
+          <Badge variant="secondary" className="font-medium">
+            <TrendingUp className="h-3 w-3 mr-1" />
+            {attendanceRate}% active
+          </Badge>
+        </div>
+        <p className="text-sm text-muted-foreground">
+          {format(new Date(), "MMMM yyyy")}
+        </p>
       </CardHeader>
-      <CardContent>
-        <div className="h-64">
+      <CardContent className="pt-2">
+        {/* Chart */}
+        <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="day" fontSize={12} />
-              <YAxis fontSize={12} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="present" fill="#22c55e" name="Present" />
-              <Bar dataKey="wfh" fill="#3b82f6" name="WFH" />
-              <Bar dataKey="leave" fill="#f59e0b" name="Leave" />
-              <Bar dataKey="absent" fill="#ef4444" name="Absent" />
+            <BarChart data={chartData} barCategoryGap="15%">
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="hsl(var(--border))"
+                vertical={false}
+              />
+              <XAxis
+                dataKey="day"
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                tick={{ fill: "hsl(var(--muted-foreground))" }}
+              />
+              <YAxis
+                fontSize={11}
+                tickLine={false}
+                axisLine={false}
+                tick={{ fill: "hsl(var(--muted-foreground))" }}
+                width={20}
+              />
+              <Tooltip content={<ChartTooltip />} cursor={{ fill: "hsl(var(--muted)/0.5)" }} />
+              <Bar dataKey="present" stackId="status" radius={[0, 0, 0, 0]}>
+                {chartData?.map((_, index) => (
+                  <Cell
+                    key={`present-${index}`}
+                    fill={STATUS_CONFIG.present.color}
+                    fillOpacity={0.9}
+                  />
+                ))}
+              </Bar>
+              <Bar dataKey="wfh" stackId="status" radius={[0, 0, 0, 0]}>
+                {chartData?.map((_, index) => (
+                  <Cell
+                    key={`wfh-${index}`}
+                    fill={STATUS_CONFIG.wfh.color}
+                    fillOpacity={0.9}
+                  />
+                ))}
+              </Bar>
+              <Bar dataKey="leave" stackId="status" radius={[0, 0, 0, 0]}>
+                {chartData?.map((_, index) => (
+                  <Cell
+                    key={`leave-${index}`}
+                    fill={STATUS_CONFIG.leave.color}
+                    fillOpacity={0.9}
+                  />
+                ))}
+              </Bar>
+              <Bar dataKey="absent" stackId="status" radius={[4, 4, 0, 0]}>
+                {chartData?.map((_, index) => (
+                  <Cell
+                    key={`absent-${index}`}
+                    fill={STATUS_CONFIG.absent.color}
+                    fillOpacity={0.9}
+                  />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
-        <div className="grid grid-cols-4 gap-4 mt-4 text-center">
-          <div>
-            <p className="text-2xl font-bold text-green-600">{summary.present}</p>
-            <p className="text-xs text-muted-foreground">Present</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold text-blue-600">{summary.wfh}</p>
-            <p className="text-xs text-muted-foreground">WFH</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold text-amber-600">{summary.leave}</p>
-            <p className="text-xs text-muted-foreground">Leave</p>
-          </div>
-          <div>
-            <p className="text-2xl font-bold text-red-600">{summary.absent}</p>
-            <p className="text-xs text-muted-foreground">Absent</p>
-          </div>
+
+        {/* Summary Stats */}
+        <div className="grid grid-cols-2 gap-3 mt-4 sm:grid-cols-4">
+          {Object.entries(STATUS_CONFIG).map(([key, config]) => {
+            const count = summary[key as keyof typeof summary];
+            const Icon = config.icon;
+            return (
+              <div
+                key={key}
+                className="flex items-center gap-3 p-3 rounded-lg bg-muted/50"
+              >
+                <div
+                  className="flex items-center justify-center w-9 h-9 rounded-lg"
+                  style={{ backgroundColor: `${config.color}15` }}
+                >
+                  <Icon
+                    className="w-4 h-4"
+                    style={{ color: config.color }}
+                  />
+                </div>
+                <div>
+                  <p className="text-lg font-bold leading-none tabular-nums">{count}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{config.label}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </CardContent>
     </Card>
