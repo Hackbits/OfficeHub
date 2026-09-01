@@ -26,7 +26,7 @@ export function LeaveBalanceCard() {
   if (isLoading) {
     return (
       <Card>
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="space-y-3">
             {[...Array(5)].map((_, i) => (
               <div key={i} className="h-8 animate-pulse bg-muted rounded" />
@@ -47,14 +47,14 @@ export function LeaveBalanceCard() {
           Leave Balance ({new Date().getFullYear()})
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="space-y-3 pb-4 sm:pb-6">
         {Object.entries(balances)
           .filter(([key]) => key !== "unpaid")
           .map(([type, balance]) => (
-            <div key={type} className="flex items-center justify-between">
-              <span className="text-sm">{LEAVE_LABELS[type]}</span>
+            <div key={type} className="flex items-center justify-between gap-2">
+              <span className="text-xs sm:text-sm">{LEAVE_LABELS[type]}</span>
               <div className="flex items-center gap-2">
-                <div className="w-24 h-2 bg-muted rounded-full overflow-hidden">
+                <div className="w-16 sm:w-24 h-1.5 sm:h-2 bg-muted rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary rounded-full"
                     style={{
@@ -62,7 +62,7 @@ export function LeaveBalanceCard() {
                     }}
                   />
                 </div>
-                <span className={`text-sm font-medium ${LEAVE_COLORS[type]}`}>
+                <span className={`text-xs sm:text-sm font-medium ${LEAVE_COLORS[type]} tabular-nums`}>
                   {balance.total - balance.used}/{balance.total}
                 </span>
               </div>
