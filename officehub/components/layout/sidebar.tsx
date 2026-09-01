@@ -19,10 +19,10 @@ export function Sidebar() {
   return (
     <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:border-r border-border bg-card">
       {/* Logo */}
-      <div className="flex items-center gap-2 px-6 py-5 border-b border-border">
+      <Link href="/" className="flex items-center gap-2 px-6 py-5 border-b border-border hover:bg-muted transition-colors">
         <Building2 className="h-6 w-6 text-primary" />
         <span className="text-lg font-semibold">{APP_NAME}</span>
-      </div>
+      </Link>
 
       {/* Navigation */}
       <nav className="flex-1 px-3 py-4 space-y-1">

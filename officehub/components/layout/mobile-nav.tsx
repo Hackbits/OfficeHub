@@ -32,8 +32,10 @@ export function MobileNav({ open, onClose }: MobileNavProps) {
       <SheetContent side="left" className="w-64 p-0">
         <SheetHeader className="border-b border-border px-6 py-5">
           <SheetTitle className="flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-primary" />
-            {APP_NAME}
+            <Link href="/" onClick={onClose} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <Building2 className="h-6 w-6 text-primary" />
+              {APP_NAME}
+            </Link>
           </SheetTitle>
         </SheetHeader>
         <nav className="px-3 py-4 space-y-1">
